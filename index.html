@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Options</title>
+</head>
+<body>
+    <h1>Stock Info</h1>
+    <form>
+        <button type="button" onclick="addStocks()">Add Stocks</button>
+        <button type="button" id="upStock" class="disabled" onclick="updateStocks()">Update Stocks</button>
+        <button type="button" id="dividend" class="disabled" onclick="addDividends()">Add Dividends</button>
+        <button type="button" id="calc" class="disabled" onclick="calcPrice()">Calculate Price</button>
+    </form><br>
+    <p>
+        <div id="stockName">Stock: </div>
+        <div id="numShares">Number of Shares: </div>
+        <div id="contribute">Contribution: </div>
+        <div id="costBasis">Current Cost Basis: </div>
+        <div id="avgCost">Cost Per Share: </div>
+        <div id="totalDiv">Dividends: </div>
+        <div id="sellPrice">Sell Price: </div>
+        <div id="profit">Profit: </div>
+        <div id="percentReturn">Percent Return: </div>
+    </p>
+    <h2>Options Position</h2>
+    <form>
+        <button type="button" id="bto" class="disabled" onclick="buyToOpen()">Buy to Open</button>
+        <button type="button" id="btc" class="disabled" onclick="buyToClose()">Buy to Close</button>
+        <button type="button" id="sto" class="disabled" onclick="sellToOpen()">Sell to Open</button>
+        <button type="button" id="stc" class="disabled" onclick="sellToClose()">Sell to Close</button>
+        <button type="button" id="expired" class="disabled" onclick="expiredOption()">Expired</button>
+        <button type="button" id="optionsCalc" class="disabled" onclick="calcOptions()">Calculate Price</button>
+    </form>
+    <p>
+        <div id="openOpt">Open Option: No</div>
+        <div id="percentProfit">Desired Profit: </div>
+        <div id="closeAmount">Close Price: </div>
+        <div id="optionsPrem">Options Premiums: </div>
+    </p>
+    <script src="script.js"></script>
+</body>
+</html>
