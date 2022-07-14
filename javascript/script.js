@@ -27,8 +27,6 @@ const printPortfolio = (portfolio) => {
     const openOptions = document.createElement("td");
     const buyOptions = document.createElement("button");
     const sellOptions = document.createElement("button");
-    const buyPopUp = document.createElement("ul");
-    const sellPopUp = document.createElement("ul");
     const costBasis = document.createElement("td");
     const cashReturn = document.createElement("td");
     const removeStockItem = document.createElement("td");
@@ -38,8 +36,6 @@ const printPortfolio = (portfolio) => {
     openOptions.classList.add("open-options");
     buyOptions.classList.add("buy-option");
     sellOptions.classList.add("sell-option");
-    buyPopUp.classList.add("buy-option-popup");
-    sellPopUp.classList.add("sell-option-popup");
     removeStock.classList.add("fa-solid", "fa-trash-can");
 
     openOptions.setAttribute("data-stock", stock.ticker);
@@ -63,8 +59,6 @@ const printPortfolio = (portfolio) => {
       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 
     openOptions.append(buyOptions, sellOptions);
-    buyOptions.append(buyPopUp);
-    sellOptions.append(sellPopUp);
     removeStockItem.append(removeStock);
 
     totalCostBasis += stock.costBasis;
