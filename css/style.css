@@ -1,6 +1,7 @@
 /* resets */
 body,
 h1,
+h2,
 ul {
   margin: 0;
   padding: 0;
@@ -48,15 +49,15 @@ header {
 }
 
 .table-open-options {
-  width: 25%;
+  width: 22%;
 }
 
 .table-cost-basis {
-  width: 23%;
+  width: 25%;
 }
 
 .table-cash-returns {
-  width: 21%;
+  width: 22%;
 }
 
 .table-delete-button {
@@ -65,7 +66,6 @@ header {
 
 .open-options {
   display: flex;
-  justify-content: center;
 }
 
 .buy-option,
@@ -74,11 +74,12 @@ header {
   display: inline-block;
   background-color: #20b2aa;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 5px;
   opacity: 1;
   transition: 0.3s;
   color: white;
   font-size: 1em;
+  flex: 1;
 }
 
 .sell-option {
@@ -111,7 +112,33 @@ header {
   justify-content: space-between;
 }
 
-@media only screen and (min-width: 768px) {
+.stock-detail-modal-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toggle-modal {
+  display: none;
+}
+
+.stock-detail-modal {
+  width: 70%;
+  height: 70%;
+  border-radius: 10px;
+  background-color: lightslategray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media only screen and (min-width: 888px) {
   main {
     display: flex;
     margin: 0 30px;
@@ -133,5 +160,10 @@ header {
   .add-stock-form {
     width: 100%;
     margin-left: 30px;
+  }
+
+  .stock-detail-modal {
+    width: 60%;
+    height: 60%;
   }
 }
