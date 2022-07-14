@@ -1,0 +1,137 @@
+/* resets */
+body,
+h1,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #6a5acd;
+  font-family: sans-serif;
+  width: 100vw;
+}
+
+header {
+  padding: 20px;
+  text-align: center;
+  color: white;
+}
+
+.portfolio-section {
+  display: flex;
+  justify-content: center;
+}
+
+.portfolio-table {
+  text-align: center;
+  color: white;
+  table-layout: fixed;
+}
+
+.portfolio-table th {
+  background-color: #9370db;
+  padding: 0.5em;
+}
+
+.portfolio-table td {
+  background-color: #b0c4de;
+  padding: 0.5em;
+}
+
+.table-ticker {
+  width: 10%;
+}
+
+.table-quantity {
+  width: 15%;
+}
+
+.table-open-options {
+  width: 25%;
+}
+
+.table-cost-basis {
+  width: 23%;
+}
+
+.table-cash-returns {
+  width: 21%;
+}
+
+.table-delete-button {
+  width: 6%;
+}
+
+.open-options {
+  display: flex;
+  justify-content: center;
+}
+
+.buy-option,
+.sell-option {
+  position: relative;
+  display: inline-block;
+  background-color: #20b2aa;
+  border: none;
+  border-radius: 0.5em;
+  opacity: 1;
+  transition: 0.3s;
+  color: white;
+  font-size: 1em;
+}
+
+.sell-option {
+  background-color: #87cefa;
+}
+
+.buy-option:active,
+.sell-option:active {
+  opacity: 0.6;
+}
+
+.open-options-list-item {
+  display: flex;
+  justify-content: center;
+}
+
+.add-stock-form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.add-stock-form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.add-stock-form div {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media only screen and (min-width: 768px) {
+  main {
+    display: flex;
+    margin: 0 30px;
+  }
+
+  .portfolio-section {
+    flex: 2;
+  }
+
+  .portfolio-table {
+    width: 100%;
+    margin-right: 30px;
+  }
+
+  .add-stock-form-container {
+    flex: 1;
+  }
+
+  .add-stock-form {
+    width: 100%;
+    margin-left: 30px;
+  }
+}

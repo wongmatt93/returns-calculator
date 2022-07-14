@@ -1,46 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Options</title>
-</head>
-<body>
-    <h1>Stock Info</h1>
-    <form>
-        <button type="button" onclick="addStocks()">Add Stocks</button>
-        <button type="button" id="upStock" class="disabled" onclick="updateStocks()">Update Stocks</button>
-        <button type="button" id="dividend" class="disabled" onclick="addDividends()">Add Dividends</button>
-        <button type="button" id="calc" class="disabled" onclick="calcPrice()">Calculate Price</button>
-    </form><br>
-    <p>
-        <div id="stockName">Stock: </div>
-        <div id="numShares">Number of Shares: </div>
-        <div id="contribute">Contribution: </div>
-        <div id="costBasis">Current Cost Basis: </div>
-        <div id="avgCost">Cost Per Share: </div>
-        <div id="totalDiv">Dividends: </div>
-        <div id="sellPrice">Sell Price: </div>
-        <div id="profit">Profit: </div>
-        <div id="percentReturn">Percent Return: </div>
-    </p>
-    <h2>Options Position</h2>
-    <form>
-        <button type="button" id="bto" class="disabled" onclick="buyToOpen()">Buy to Open</button>
-        <button type="button" id="btc" class="disabled" onclick="buyToClose()">Buy to Close</button>
-        <button type="button" id="sto" class="disabled" onclick="sellToOpen()">Sell to Open</button>
-        <button type="button" id="stc" class="disabled" onclick="sellToClose()">Sell to Close</button>
-        <button type="button" id="expired" class="disabled" onclick="expiredOption()">Expired</button>
-        <button type="button" id="optionsCalc" class="disabled" onclick="calcOptions()">Calculate Price</button>
-    </form>
-    <p>
-        <div id="openOpt">Open Option: No</div>
-        <div id="percentProfit">Desired Profit: </div>
-        <div id="closeAmount">Close Price: </div>
-        <div id="optionsPrem">Options Premiums: </div>
-    </p>
-    <script src="script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <script
+      src="https://kit.fontawesome.com/7ab65ecb35.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Portfolio View</title>
+  </head>
+  <body>
+    <header>
+      <h1>Cash Returns Tracker</h1>
+    </header>
+    <main>
+      <section class="portfolio-section">
+        <table class="portfolio-table">
+          <caption>
+            Portfolio Overview
+          </caption>
+          <thead>
+            <tr class="table-stock-header">
+              <th class="table-ticker">Stock</th>
+              <th class="table-quantity">Quantity</th>
+              <th class="table-open-options">Open Options</th>
+              <th class="table-cost-basis">Cost Basis</th>
+              <th class="table-cash-returns">Returns</th>
+              <th class="table-delete-button"></th>
+            </tr>
+          </thead>
+          <tbody class="portfolio-list"></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3">Total:</td>
+              <td class="total-cost-basis">$0.00</td>
+              <td class="total-cash-return">$0.00</td>
+            </tr>
+          </tfoot>
+        </table>
+      </section>
+      <div class="add-stock-form-container">
+        <form class="add-stock-form">
+          <div>
+            <label for="ticker">Stock Ticker</label>
+            <input type="text" name="ticker" id="ticker" value="C" />
+          </div>
+          <div>
+            <label for="quantity">Quantity</label>
+            <input type="number" name="quantity" id="quantity" value="100" />
+          </div>
+          <div>
+            <label for="cost-basis">Cost Basis</label>
+            <input
+              type="number"
+              name="cost-basis"
+              id="cost-basis"
+              value="1000"
+            />
+          </div>
+          <button>Add Stock</button>
+        </form>
+      </div>
+    </main>
+    <script src="javascript/script.js"></script>
+  </body>
 </html>
