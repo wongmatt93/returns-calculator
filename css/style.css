@@ -13,10 +13,43 @@ body {
   width: 100vw;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 header {
   padding: 20px;
   text-align: center;
   color: white;
+}
+
+.totals-table {
+  text-align: center;
+  color: white;
+}
+
+.totals-table th {
+  background-color: #9370db;
+  padding: 10px;
+}
+
+.totals-table td {
+  background-color: #b0c4de;
+  padding: 10px;
+}
+
+.table-total-cost-basis {
+  width: 33.3%;
+}
+
+.table-total-cash-return {
+  width: 33.3%;
+}
+
+.table-total-percent-return {
+  width: 33.3%;
 }
 
 .portfolio-section {
@@ -41,10 +74,6 @@ header {
 }
 
 .table-ticker {
-  width: 10%;
-}
-
-.table-quantity {
   width: 15%;
 }
 
@@ -53,15 +82,15 @@ header {
 }
 
 .table-cost-basis {
-  width: 25%;
+  width: 27%;
 }
 
 .table-cash-returns {
-  width: 22%;
+  width: 27%;
 }
 
 .table-delete-button {
-  width: 6%;
+  width: 9%;
 }
 
 .open-options {
@@ -104,7 +133,7 @@ header {
 .add-stock-form {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 75%;
 }
 
 .add-stock-form div {
@@ -139,7 +168,7 @@ header {
 }
 
 @media only screen and (min-width: 888px) {
-  main {
+  .overview-form-container {
     display: flex;
     margin: 0 30px;
   }

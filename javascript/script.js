@@ -3,8 +3,6 @@ const portfolio = [
   {
     ticker: "AAPL",
     quantity: 0,
-    buyOptions: 0,
-    sellOptions: 2,
     costBasis: 28000,
     cashReturn: 750,
   },
@@ -25,8 +23,9 @@ const openOptionsPositions = [
 const portfolioList = document.querySelector(".portfolio-list");
 const addStockForm = document.querySelector(".add-stock-form");
 const deleteStock = document.querySelector(".fa-trash-can");
-const finalCostBasis = document.querySelector(".total-cost-basis");
-const finalCashReturn = document.querySelector(".total-cash-return");
+const totalCostBasis = document.querySelector(".total-cost-basis");
+const totalCashReturn = document.querySelector(".total-cash-return");
+const totalPercentReturn = document.querySelector(".total-percent-return");
 const stockFormModal = document.querySelector(".stock-detail-modal-container");
 const detailHeader = document.querySelector(".detail-header");
 const detailQuantity = document.querySelector(".detail-quantity");
@@ -37,14 +36,13 @@ const detailActiveOptions = document.querySelector(".detail-active-options");
 //print portfolio to homepage function
 const printPortfolio = (portfolio) => {
   portfolioList.textContent = "";
-  let totalCostBasis = 0;
-  let totalCashReturn = 0;
+  let stockCostBasis = 0;
+  let stockCashReturn = 0;
 
   portfolio.forEach((stock, index) => {
     const newStock = document.createElement("tr");
     const ticker = document.createElement("td");
     const tickerLink = document.createElement("a");
-    const quantity = document.createElement("td");
     const openOptions = document.createElement("td");
     const buyOptions = document.createElement("button");
     const sellOptions = document.createElement("button");
@@ -52,6 +50,13 @@ const printPortfolio = (portfolio) => {
     const cashReturn = document.createElement("td");
     const removeStockItem = document.createElement("td");
     const removeStock = document.createElement("i");
+
+    const openBuyOptions = openOptionsPositions.filter(
+      (option) => option.buySell == "Buy"
+    ).length;
+    const openSellOptions = openOptionsPositions.filter(
+      (option) => option.buySell == "Sell"
+    ).length;
 
     newStock.classList.add("individual-stock");
     tickerLink.classList.add("stock-link");
@@ -67,11 +72,8 @@ const printPortfolio = (portfolio) => {
     removeStock.setAttribute("data-index", index);
 
     tickerLink.textContent = stock.ticker;
-    quantity.textContent = stock.quantity
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    buyOptions.textContent = `Buy: ${stock.buyOptions}`;
-    sellOptions.textContent = `Sell: ${stock.sellOptions}`;
+    buyOptions.textContent = `Buy: ${openBuyOptions}`;
+    sellOptions.textContent = `Sell: ${openSellOptions}`;
     costBasis.textContent = `$${stock.costBasis
       .toFixed(2)
       .toString()
@@ -85,12 +87,11 @@ const printPortfolio = (portfolio) => {
     openOptions.append(buyOptions, sellOptions);
     removeStockItem.append(removeStock);
 
-    totalCostBasis += stock.costBasis;
-    totalCashReturn += stock.cashReturn;
+    stockCostBasis += stock.costBasis;
+    stockCashReturn += stock.cashReturn;
 
     newStock.append(
       ticker,
-      quantity,
       openOptions,
       costBasis,
       cashReturn,
@@ -99,14 +100,25 @@ const printPortfolio = (portfolio) => {
     portfolioList.append(newStock);
   });
 
-  finalCostBasis.textContent = `$${totalCostBasis
+  totalCostBasis.textContent = `$${stockCostBasis
     .toFixed(2)
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
-  finalCashReturn.textContent = `$${totalCashReturn
+  totalCashReturn.textContent = `$${stockCashReturn
     .toFixed(2)
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+  if (totalCostBasis != 0) {
+    totalPercentReturn.textContent = `${(
+      (stockCashReturn / stockCostBasis) *
+      100
+    )
+      .toFixed(2)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}%`;
+  } else {
+    totalPercentReturn.textContent = `0%`;
+  }
 };
 
 //print options in detail modal function
@@ -135,12 +147,11 @@ const printOptions = (options, ticker) => {
 addStockForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const ticker = document.querySelector("#ticker").value;
-  const quantity = document.querySelector("#quantity").value;
   const costBasis = parseInt(document.querySelector("#cost-basis").value);
 
   const newStock = {
     ticker,
-    quantity,
+    quantity: 0,
     buyOptions: 0,
     sellOptions: 0,
     costBasis,

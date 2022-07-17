@@ -16,52 +16,61 @@
       <h1>Cash Returns Tracker</h1>
     </header>
     <main>
-      <section class="portfolio-section">
-        <table class="portfolio-table">
-          <caption>
-            Portfolio Overview
-          </caption>
-          <thead>
-            <tr class="table-stock-header">
-              <th class="table-ticker">Stock</th>
-              <th class="table-quantity">Quantity</th>
-              <th class="table-open-options">Open Options</th>
-              <th class="table-cost-basis">Cost Basis</th>
-              <th class="table-cash-returns">Returns</th>
-              <th class="table-delete-button"></th>
-            </tr>
-          </thead>
-          <tbody class="portfolio-list"></tbody>
-          <tfoot>
-            <tr>
-              <td colspan="3">Total:</td>
-              <td class="total-cost-basis">$0.00</td>
-              <td class="total-cash-return">$0.00</td>
-            </tr>
-          </tfoot>
-        </table>
-      </section>
-      <div class="add-stock-form-container">
-        <form class="add-stock-form">
-          <div>
-            <label for="ticker">Stock Ticker</label>
-            <input type="text" name="ticker" id="ticker" value="C" />
-          </div>
-          <div>
-            <label for="quantity">Quantity</label>
-            <input type="number" name="quantity" id="quantity" value="100" />
-          </div>
-          <div>
-            <label for="cost-basis">Cost Basis</label>
-            <input
-              type="number"
-              name="cost-basis"
-              id="cost-basis"
-              value="1000"
-            />
-          </div>
-          <button>Add Stock</button>
-        </form>
+      <table class="totals-table">
+        <caption>
+          Totals
+        </caption>
+        <thead>
+          <tr class="table-total-header">
+            <th class="table-total-cost-basis">Cost Basis</th>
+            <th class="table-total-cash-return">Cash Return</th>
+            <th class="table-total-percent-return">Percent Return</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="total-cost-basis"></td>
+            <td class="total-cash-return"></td>
+            <td class="total-percent-return"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="overview-form-container">
+        <section class="portfolio-section">
+          <table class="portfolio-table">
+            <caption>
+              Portfolio Overview
+            </caption>
+            <thead>
+              <tr class="table-stock-header">
+                <th class="table-ticker">Stock</th>
+                <th class="table-open-options">Open Options</th>
+                <th class="table-cost-basis">Cost Basis</th>
+                <th class="table-cash-returns">Returns</th>
+                <th class="table-delete-button"></th>
+              </tr>
+            </thead>
+            <tbody class="portfolio-list"></tbody>
+          </table>
+        </section>
+        <div class="add-stock-form-container">
+          <form class="add-stock-form">
+            <div>
+              <label for="ticker">Stock Ticker</label>
+              <input type="text" name="ticker" id="ticker" value="C" />
+            </div>
+            <div>
+              <label for="cost-basis">Cost Basis</label>
+              <input
+                type="number"
+                name="cost-basis"
+                id="cost-basis"
+                value="1000"
+              />
+            </div>
+            <button>Add Stock</button>
+          </form>
+        </div>
       </div>
       <section class="stock-detail-modal-container toggle-modal">
         <div class="stock-detail-modal">
