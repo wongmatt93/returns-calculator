@@ -41,8 +41,30 @@ const detailCostBasis = document.querySelector(".detail-cost-basis");
 const detailDividends = document.querySelector(".detail-dividends");
 const detailPremiums = document.querySelector(".detail-premiums");
 const detailReturns = document.querySelector(".detail-total-returns");
-const detailActiveOptions = document.querySelector(".detail-all-options");
-const detailAllOptions = document.querySelector(".detail-all-options");
+const detailAllCredits = document.querySelector(".detail-all-credits");
+const detailAllDebits = document.querySelector(".detail-all-debits");
+
+//formatMoney function since it's used often
+const formatMoney = (money) => {
+  return money
+    .toFixed(2)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+//totalPremium function to properly add up credits/debits
+const totalPremiumFunction = (optionsArray, ticker) => {
+  const tickerOptions = optionsArray.filter(
+    (option) => option.ticker == ticker
+  );
+  let totalPremium = 0;
+  tickerOptions.forEach((option) => {
+    option.type.includes("B")
+      ? (totalPremium -= option.premium)
+      : (totalPremium += option.premium);
+  });
+  return totalPremium;
+};
 
 //print portfolio to homepage function
 const printPortfolio = (portfolio) => {
@@ -74,11 +96,8 @@ const printPortfolio = (portfolio) => {
         option.ticker == stock.ticker &&
         option.openOption
     ).length;
-    const premium = optionsPositions.reduce(
-      (pv, cv) => (cv.ticker === stock.ticker ? pv + cv.premium : pv),
-      0
-    );
-    const stockReturn = stock.dividends + premium;
+    const stockReturn =
+      stock.dividends + totalPremiumFunction(optionsPositions, stock.ticker);
 
     newStock.classList.add("individual-stock");
     tickerLink.classList.add("stock-link");
@@ -97,14 +116,8 @@ const printPortfolio = (portfolio) => {
     tickerLink.textContent = stock.ticker;
     buyOptions.textContent = `Buy: ${openBuyOptions}`;
     sellOptions.textContent = `Sell: ${openSellOptions}`;
-    costBasis.textContent = `$${stock.costBasis
-      .toFixed(2)
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
-    cashReturn.textContent = `$${stockReturn
-      .toFixed(2)
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+    costBasis.textContent = `$${formatMoney(stock.costBasis)}`;
+    cashReturn.textContent = `$${formatMoney(stockReturn)}`;
 
     ticker.append(tickerLink);
     openOptions.append(buyOptions, sellOptions);
@@ -123,22 +136,12 @@ const printPortfolio = (portfolio) => {
     portfolioList.append(newStock);
   });
 
-  totalCostBasis.textContent = `$${totalStockCostBasis
-    .toFixed(2)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
-  totalCashReturn.textContent = `$${totalStockCashReturn
-    .toFixed(2)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+  totalCostBasis.textContent = `$${formatMoney(totalStockCostBasis)}`;
+  totalCashReturn.textContent = `$${formatMoney(totalStockCashReturn)}`;
   if (totalCostBasis.textContent != "$0.00") {
-    totalPercentReturn.textContent = `${(
-      (totalStockCashReturn / totalStockCostBasis) *
-      100
-    )
-      .toFixed(2)
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}%`;
+    totalPercentReturn.textContent = `${formatMoney(
+      (totalStockCashReturn / totalStockCostBasis) * 100
+    )}%`;
   } else {
     totalPercentReturn.textContent = `N/A`;
   }
@@ -146,15 +149,14 @@ const printPortfolio = (portfolio) => {
 
 //print options in detail modal function
 const printOptions = (optionsArray, ticker) => {
-  detailActiveOptions.textContent = "";
-
-  let totalPremium = 0;
+  detailAllCredits.textContent = "";
+  detailAllDebits.textContent = "";
+  const totalPremium = totalPremiumFunction(optionsArray, ticker);
 
   optionsArray.forEach((option) => {
     if (option.ticker == ticker) {
       const newOption = document.createElement("tr");
       const type = document.createElement("td");
-      const transactionDate = document.createElement("td");
       const strike = document.createElement("td");
       const callPut = document.createElement("td");
       const premium = document.createElement("td");
@@ -164,59 +166,47 @@ const printOptions = (optionsArray, ticker) => {
       const statusText = option.openOption ? "Open" : "Closed";
 
       type.textContent = option.type;
-      transactionDate.textContent = option.transactionDate;
-      strike.textContent = `$${option.strike
-        .toFixed(2)
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+      strike.textContent = `$${formatMoney(option.strike)}`;
       callPut.textContent = option.callPut;
-      premium.textContent = `$${option.premium
-        .toFixed(2)
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+      premium.textContent = `$${formatMoney(option.premium)}`;
       expiration.textContent = option.expiration;
       status.textContent = statusText;
 
-      totalPremium += option.premium;
-
-      newOption.append(
-        type,
-        transactionDate,
-        strike,
-        callPut,
-        premium,
-        expiration,
-        statusText
-      );
-      detailActiveOptions.append(newOption);
+      if (option.type.includes("O")) {
+        newOption.append(type, strike, callPut, premium, expiration, status);
+        detailAllCredits.prepend(newOption);
+      } else {
+        newOption.append(type, strike, callPut, premium, expiration);
+        detailAllDebits.prepend(newOption);
+      }
     }
   });
 
   const dividends = detailDividends.textContent;
   const totalReturn = parseInt(totalPremium + dividends);
 
-  detailPremiums.textContent = `$${totalPremium
-    .toFixed(2)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
-  detailReturns.textContent = `$${totalReturn
-    .toFixed(2)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+  detailPremiums.textContent = `$${formatMoney(totalPremium)}`;
+  detailReturns.textContent = `$${formatMoney(totalReturn)}`;
 };
 
 const printDividends = (dividends, ticker) => {
   const stockDividends = dividends.filter(
     (dividend) => dividend.ticker == ticker
   );
-  const totalDividends = stockDividends.reduce((pv, cv) => {
-    return pv + cv.amount;
-  }, 0);
+  const totalDividends = stockDividends.reduce((pv, cv) => pv + cv.amount, 0);
 
-  detailDividends.textContent = `$${totalDividends
-    .toFixed(2)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+  const stockOptions = optionsPositions.filter(
+    (option) => option.ticker == ticker
+  );
+  const totalPremiums = stockOptions.reduce(
+    (pv, cv) => (cv.type.includes("S") ? pv + cv.premium : pv - cv.premium),
+    0
+  );
+
+  const totalReturn = totalDividends + totalPremiums;
+
+  detailDividends.textContent = `$${formatMoney(totalDividends)}`;
+  detailReturns.textContent = `$${formatMoney(totalReturn)}`;
 };
 
 //add a stock to portfolio
@@ -245,9 +235,7 @@ updateQuantityForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const ticker = detailHeader.textContent;
   const quantity = document.querySelector("#quantity").value;
-  const stock = portfolio.find((stock) => {
-    return stock.ticker == ticker;
-  });
+  const stock = portfolio.find((stock) => stock.ticker == ticker);
 
   stock.quantity = quantity;
   detailQuantity.textContent = quantity;
@@ -266,8 +254,13 @@ updateDividendForm.addEventListener("submit", (event) => {
     amount,
   };
 
+  //update portfolio objects
+  const stock = portfolio.find((stock) => stock.ticker == ticker);
+  stock.dividends += amount;
+
   dividends.push(newDividend);
   printDividends(dividends, ticker);
+  printPortfolio(portfolio);
 });
 
 //add an option to portfolio
@@ -281,20 +274,52 @@ addOptionsForm.addEventListener("submit", (event) => {
   const premium = parseInt(document.querySelector("#premium").value);
   const expiration = document.querySelector("#expiration").value;
 
-  const newOption = {
-    type: type,
-    ticker: ticker,
-    transactionDate: transactionDate,
-    strike: strike,
-    callPut: callPut,
-    premium: premium,
-    expiration: expiration,
-    openOption: type.includes("O"),
-  };
-  optionsPositions.push(newOption);
+  if (type.includes("C")) {
+    const oldOption = optionsPositions.find((option) => {
+      return (
+        option.ticker == ticker &&
+        option.strike == strike &&
+        option.expiration == expiration &&
+        option.callPut == callPut &&
+        option.type.includes("O") &&
+        option.openOption == true
+      );
+    });
+    if (oldOption) {
+      oldOption.openOption = false;
+      const newOption = {
+        type: type,
+        ticker: ticker,
+        transactionDate: transactionDate,
+        strike: strike,
+        callPut: callPut,
+        premium: premium,
+        expiration: expiration,
+        openOption: type.includes("O"),
+      };
+      optionsPositions.push(newOption);
 
-  printOptions(optionsPositions, ticker);
-  printPortfolio(portfolio);
+      printOptions(optionsPositions, ticker);
+      printPortfolio(portfolio);
+    } else {
+      alert("There is no option to close");
+    }
+  } else {
+    const newOption = {
+      type: type,
+      ticker: ticker,
+      transactionDate: transactionDate,
+      strike: strike,
+      callPut: callPut,
+      premium: premium,
+      expiration: expiration,
+      openOption: type.includes("O"),
+    };
+    optionsPositions.push(newOption);
+
+    printOptions(optionsPositions, ticker);
+    printPortfolio(portfolio);
+  }
 });
 
 //multiple events, but both are included in same event listener
@@ -323,14 +348,8 @@ portfolioList.addEventListener("click", (event) => {
     detailQuantity.textContent = `${stock.quantity
       .toString()
       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
-    detailCostBasis.textContent = `$${stock.costBasis
-      .toFixed(2)
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
-    detailDividends.textContent = `$${stock.dividends
-      .toFixed(2)
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+    detailCostBasis.textContent = `$${formatMoney(stock.costBasis)}`;
+    detailDividends.textContent = `$${formatMoney(stock.dividends)}`;
     printOptions(optionsPositions, ticker);
   }
 });

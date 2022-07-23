@@ -75,87 +75,128 @@
       <section class="stock-detail-modal-container toggle-modal">
         <div class="stock-detail-modal">
           <h2 class="detail-header"></h2>
-          <div class="update-stock-form-container">
-            <form class="update-quantity-form">
-              <label for="quantity">Quantity</label>
-              <input type="number" name="quantity" id="quantity" />
-              <button>Update</button>
-            </form>
-            <form class="update-dividend-form">
-              <label for="dividend-date">Received Date</label>
-              <input type="date" name="dividend-date" id="dividend-date" />
-              <label for="dividend-amount">Amount</label>
-              <input
-                type="number"
-                name="dividend-amount"
-                id="dividend-amount"
-              />
-              <button>Add</button>
-            </form>
+          <div class="modal-upper-section">
+            <table class="detail-totals">
+              <thead>
+                <tr>
+                  <th class="detail-quantity-header">Quantity</th>
+                  <th class="detail-cost-basis-header">Cost Basis</th>
+                  <th class="detail-dividends-header">Dividends</th>
+                  <th class="detail-premiums-header">Premiums</th>
+                  <th class="detail-total-returns-header">Total Returns</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="detail-quantity"></td>
+                  <td class="detail-cost-basis"></td>
+                  <td class="detail-dividends"></td>
+                  <td class="detail-premiums"></td>
+                  <td class="detail-total-returns"></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="update-stock-form-container">
+              <form class="update-quantity-form">
+                <div>
+                  <label for="quantity">Quantity</label>
+                  <input type="number" name="quantity" id="quantity" />
+                </div>
+                <button>Update</button>
+              </form>
+              <form class="update-dividend-form">
+                <div>
+                  <label for="dividend-date">Received Date</label>
+                  <input type="date" name="dividend-date" id="dividend-date" />
+                </div>
+                <div>
+                  <label for="dividend-amount">Amount</label>
+                  <input
+                    type="number"
+                    name="dividend-amount"
+                    id="dividend-amount"
+                  />
+                </div>
+                <button>Add</button>
+              </form>
+            </div>
           </div>
-          <table class="detail-totals">
-            <thead>
-              <tr>
-                <th class="detail-quantity-header">Quantity</th>
-                <th class="detail-cost-basis-header">Cost Basis</th>
-                <th class="detail-dividends-header">Dividends</th>
-                <th class="detail-premiums-header">Premiums</th>
-                <th class="detail-total-returns-header">Total Returns</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="detail-quantity"></td>
-                <td class="detail-cost-basis"></td>
-                <td class="detail-dividends"></td>
-                <td class="detail-premiums"></td>
-                <td class="detail-total-returns"></td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="add-options-form-container">
-            <form class="add-options-form">
-              <label for="type">Type</label>
-              <select name="type" id="type">
-                <option value="BTO">Buy to Open</option>
-                <option value="BTC">Buy to Close</option>
-                <option value="STO">Sell to Open</option>
-                <option value="STC">Sell to Close</option>
-              </select>
-              <label for="transaction-date">Transaction Date</label>
-              <input
-                type="date"
-                name="transaction-date"
-                id="transaction-date"
-              />
-              <label for="strike">Strike</label>
-              <input type="number" name="strike" id="strike" />
-              <label for="call-put">Call/Put</label>
-              <select name="call-put" id="call-put">
-                <option value="call">Call</option>
-                <option value="put">Put</option>
-              </select>
-              <label for="premium">Premium</label>
-              <input type="number" name="premium" id="premium" />
-              <label for="expiration">Expiration</label>
-              <input type="date" name="expiration" id="expiration" />
-              <button>Add</button>
-            </form>
+          <div class="modal-lower-section">
+            <div class="both-options-tables">
+              <table class="detail-credits-table">
+                <caption>
+                  Credits
+                </caption>
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Strike</th>
+                    <th>Call/Put</th>
+                    <th>Premium</th>
+                    <th>Expiration</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody class="detail-all-credits"></tbody>
+              </table>
+              <table class="detail-debits-table">
+                <caption>
+                  Debits
+                </caption>
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Strike</th>
+                    <th>Call/Put</th>
+                    <th>Premium</th>
+                    <th>Expiration</th>
+                  </tr>
+                </thead>
+                <tbody class="detail-all-debits"></tbody>
+              </table>
+            </div>
+            <div class="add-options-form-container">
+              <form class="add-options-form">
+                <div>
+                  <label for="type">Type</label>
+                  <select name="type" id="type">
+                    <option value="BTO">Buy to Open</option>
+                    <option value="BTC">Buy to Close</option>
+                    <option value="STO">Sell to Open</option>
+                    <option value="STC">Sell to Close</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="transaction-date">Transaction Date</label>
+                  <input
+                    type="date"
+                    name="transaction-date"
+                    id="transaction-date"
+                  />
+                </div>
+                <div>
+                  <label for="strike">Strike</label>
+                  <input type="number" name="strike" id="strike" />
+                </div>
+                <div>
+                  <label for="call-put">Call/Put</label>
+                  <select name="call-put" id="call-put">
+                    <option value="Call">Call</option>
+                    <option value="Put">Put</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="premium">Premium</label>
+                  <input type="number" name="premium" id="premium" />
+                </div>
+                <div>
+                  <label for="expiration">Expiration</label>
+                  <input type="date" name="expiration" id="expiration" />
+                </div>
+                <button>Add</button>
+              </form>
+            </div>
           </div>
-          <table class="detail-options-table">
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Transaction Date</th>
-                <th>Strike</th>
-                <th>Call/Put</th>
-                <th>Premium</th>
-                <th>Expiration</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody class="detail-all-options"></tbody>
-          </table>
         </div>
       </section>
     </main>
